@@ -94,7 +94,7 @@ public class DynamoDbClientWrapper {
             }
         }
 
-        try (final DynamoDbWaiter dynamoDbWaiter = DynamoDbWaiter.create()) {
+        try (final DynamoDbWaiter dynamoDbWaiter = DynamoDbWaiter.builder().client(dynamoDbClient).build()) {
             final DescribeTableRequest describeTableRequest = DescribeTableRequest.builder().tableName(dynamoStoreSettings.getTableName()).build();
             final ResponseOrException<DescribeTableResponse> response = dynamoDbWaiter
                     .waitUntilTableExists(describeTableRequest)

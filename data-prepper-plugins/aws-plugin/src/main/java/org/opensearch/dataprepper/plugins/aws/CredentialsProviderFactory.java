@@ -22,6 +22,7 @@ import software.amazon.awssdk.services.sts.StsClientBuilder;
 import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider;
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest;
 
+import java.net.URI;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Objects;
@@ -112,7 +113,8 @@ class CredentialsProviderFactory {
                 .build();
 
         StsClientBuilder stsClientBuilder = StsClient.builder()
-                .overrideConfiguration(clientOverrideConfiguration);
+                .overrideConfiguration(clientOverrideConfiguration)
+                .endpointOverride(URI.create("http://localstack:4566"));
 
         stsClientBuilder = Optional.ofNullable(region)
                 .map(stsClientBuilder::region)

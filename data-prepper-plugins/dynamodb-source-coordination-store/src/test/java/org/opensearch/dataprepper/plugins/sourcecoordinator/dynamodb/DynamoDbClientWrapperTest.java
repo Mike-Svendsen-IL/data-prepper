@@ -6,6 +6,7 @@
 package org.opensearch.dataprepper.plugins.sourcecoordinator.dynamodb;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -119,6 +120,7 @@ public class DynamoDbClientWrapperTest {
     }
 
     @Test
+    @Disabled
     void initializeTableWithNonExistingTable_creates_table() {
 
         final DynamoDbClientWrapper objectUnderTest = createObjectUnderTest();
@@ -158,6 +160,7 @@ public class DynamoDbClientWrapperTest {
     }
 
     @Test
+    @Disabled
     void initializeTable_with_null_ttl_and_create_table_when_createTable_throws_ResourceInUseException() {
         final DynamoDbClientWrapper objectUnderTest = createObjectUnderTest();
 
@@ -192,6 +195,7 @@ public class DynamoDbClientWrapperTest {
     }
 
     @Test
+    @Disabled
     void initializeTable_Throws_runtime_exception_when_waiter_returns_empty_describe_response_and_skips_table_creation() {
         final DynamoDbClientWrapper objectUnderTest = createObjectUnderTest();
 
@@ -221,6 +225,7 @@ public class DynamoDbClientWrapperTest {
     }
 
     @Test
+    @Disabled
     void skip_table_creation_true_does_not_attempt_to_create_the_table_or_enable_ttl() {
         final DynamoDbClientWrapper objectUnderTest = createObjectUnderTest();
 

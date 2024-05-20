@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.sts.StsClient;
 import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider;
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest;
 
+import java.net.URI;
 import java.time.Duration;
 import java.util.UUID;
 
@@ -38,6 +39,7 @@ public class DynamoDbClientFactory {
                 .region(Region.of(region))
                 .credentialsProvider(getAwsCredentials(Region.of(region), stsRoleArn, stsExternalId))
                 .overrideConfiguration(getClientOverrideConfiguration())
+                .endpointOverride(URI.create("http://localstack:4566"))
                 .build();
     }
 
@@ -73,6 +75,7 @@ public class DynamoDbClientFactory {
             final StsClient stsClient = StsClient.builder()
                     .region(region)
                     .overrideConfiguration(getClientOverrideConfiguration())
+                    .endpointOverride(URI.create("http://localstack:4566"))
                     .build();
 
             AssumeRoleRequest.Builder assumeRoleRequestBuilder = AssumeRoleRequest.builder()

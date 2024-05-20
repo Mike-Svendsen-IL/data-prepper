@@ -16,6 +16,8 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.streams.DynamoDbStreamsClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
+import java.net.URI;
+
 public class ClientFactory {
 
     private final AwsCredentialsProvider awsCredentialsProvider;
@@ -40,6 +42,7 @@ public class ClientFactory {
         return DynamoDbStreamsClient.builder()
                 .credentialsProvider(awsCredentialsProvider)
                 .region(awsAuthenticationConfig.getAwsRegion())
+                .endpointOverride(URI.create("http://localstack:4566"))
                 .build();
     }
 
@@ -48,6 +51,7 @@ public class ClientFactory {
         return DynamoDbClient.builder()
                 .region(awsAuthenticationConfig.getAwsRegion())
                 .credentialsProvider(awsCredentialsProvider)
+                .endpointOverride(URI.create("http://localstack:4566"))
                 .build();
     }
 
@@ -56,6 +60,7 @@ public class ClientFactory {
         return S3Client.builder()
                 .region(getS3ClientRegion())
                 .credentialsProvider(awsCredentialsProvider)
+                .endpointOverride(URI.create("http://localstack:4566"))
                 .overrideConfiguration(ClientOverrideConfiguration.builder()
                         .retryPolicy(retryPolicy -> retryPolicy.numRetries(5).build())
                         .build())

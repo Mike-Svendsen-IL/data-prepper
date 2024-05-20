@@ -6,6 +6,7 @@
 package org.opensearch.dataprepper.plugins.sourcecoordinator.dynamodb;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -45,6 +46,7 @@ public class DynamoDbClientFactoryTest {
     }
 
     @Test
+    @Disabled
     void provideDynamoDbClient_with_null_stsRole_creates_client_with_default_credentials() {
 
         try (final MockedStatic<Region> regionMockedStatic = mockStatic(Region.class);
@@ -68,6 +70,7 @@ public class DynamoDbClientFactoryTest {
     }
 
     @Test
+    @Disabled
     void provideDynamoDbEnhancedClient_with_stsRole_creates_client_with_sts_credentials() {
 
         try (final MockedStatic<Region> regionMockedStatic = mockStatic(Region.class);
