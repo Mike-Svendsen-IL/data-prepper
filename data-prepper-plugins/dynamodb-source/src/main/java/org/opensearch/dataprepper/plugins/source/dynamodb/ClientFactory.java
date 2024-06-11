@@ -39,28 +39,34 @@ public class ClientFactory {
 
 
     public DynamoDbStreamsClient buildDynamoDbStreamClient() {
+        String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
         return DynamoDbStreamsClient.builder()
                 .credentialsProvider(awsCredentialsProvider)
                 .region(awsAuthenticationConfig.getAwsRegion())
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create(endpoint))
                 .build();
     }
 
 
     public DynamoDbClient buildDynamoDBClient() {
+        String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
         return DynamoDbClient.builder()
                 .region(awsAuthenticationConfig.getAwsRegion())
                 .credentialsProvider(awsCredentialsProvider)
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create(endpoint))
                 .build();
     }
 
 
     public S3Client buildS3Client() {
+        String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
         return S3Client.builder()
                 .region(getS3ClientRegion())
                 .credentialsProvider(awsCredentialsProvider)
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create(endpoint))
                 .overrideConfiguration(ClientOverrideConfiguration.builder()
                         .retryPolicy(retryPolicy -> retryPolicy.numRetries(5).build())
                         .build())

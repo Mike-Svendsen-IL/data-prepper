@@ -35,11 +35,13 @@ public class DynamoDbClientFactory {
     public static DynamoDbClient provideDynamoDbClient(
         final String region, final String stsRoleArn, final String stsExternalId
     ) {
+        String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
         return DynamoDbClient.builder()
                 .region(Region.of(region))
                 .credentialsProvider(getAwsCredentials(Region.of(region), stsRoleArn, stsExternalId))
                 .overrideConfiguration(getClientOverrideConfiguration())
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create(endpoint))
                 .build();
     }
 
@@ -72,10 +74,13 @@ public class DynamoDbClientFactory {
                 throw new IllegalArgumentException("Invalid ARN format for dynamodb sts_role_arn");
             }
 
+            String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                    ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
+
             final StsClient stsClient = StsClient.builder()
                     .region(region)
                     .overrideConfiguration(getClientOverrideConfiguration())
-                    .endpointOverride(URI.create("http://localstack:4566"))
+                    .endpointOverride(URI.create(endpoint))
                     .build();
 
             AssumeRoleRequest.Builder assumeRoleRequestBuilder = AssumeRoleRequest.builder()

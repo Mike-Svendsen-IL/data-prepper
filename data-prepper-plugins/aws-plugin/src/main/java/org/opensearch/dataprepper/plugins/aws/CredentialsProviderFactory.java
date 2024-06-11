@@ -112,9 +112,12 @@ class CredentialsProviderFactory {
                 .retryPolicy(retryPolicy)
                 .build();
 
+        String endpoint = System.getenv("AWS_ENDPOINT_URL") == null
+                ? "http://localstack:4566" : System.getenv("AWS_ENDPOINT_URL");
+
         StsClientBuilder stsClientBuilder = StsClient.builder()
                 .overrideConfiguration(clientOverrideConfiguration)
-                .endpointOverride(URI.create("http://localstack:4566"));
+                .endpointOverride(URI.create(endpoint));
 
         stsClientBuilder = Optional.ofNullable(region)
                 .map(stsClientBuilder::region)
